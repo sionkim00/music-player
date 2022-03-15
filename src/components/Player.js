@@ -9,9 +9,11 @@ import {
 
 export default function Player({
   currentSong,
+  songs,
   isPlaying,
   setIsPlaying,
-  audioRef
+  audioRef,
+  setCurrentSong
 }) {
   const [songInfo, setSongInfo] = useState({
     currentTime: 0,
@@ -33,15 +35,27 @@ export default function Player({
     const duration = e.target.duration;
     setSongInfo({ ...songInfo, currentTime: current, duration });
   };
+  const handleDrag = (e) => {
+    audioRef.current.currentTime = e.target.value;
+    setSongInfo({ ...songInfo, currentTime: e.target.value });
+  };
+  const handleSkip = (direction) => {
+    let currentIndex = songs.findIndex((song) => currentSong.id === song.id);
+    if (direction === "skip-forward") {
+      setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+    } else if (direction === "skip-back") {
+      if ((currentIndex - 1) % songs.length === -1) {
+        setCurrentSong(songs[songs.length - 1]);
+      } else {
+        setCurrentSong(songs[(currentIndex - 1) % songs.length]);
+      }
+    }
+  };
 
   const trimTime = (time) => {
     return (
       Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
     );
-  };
-  const handleDrag = (e) => {
-    audioRef.current.currentTime = e.target.value;
-    setSongInfo({ ...songInfo, currentTime: e.target.value });
   };
 
   return (
@@ -58,7 +72,12 @@ export default function Player({
         <p>{trimTime(songInfo.duration)}</p>
       </div>
       <div className="play-control">
-        <FontAwesomeIcon className="skip-back" icon={faAngleLeft} size="2x" />
+        <FontAwesomeIcon
+          className="skip-back"
+          icon={faAngleLeft}
+          size="2x"
+          onClick={() => handleSkip("skip-back")}
+        />
         <FontAwesomeIcon
           onClick={handlePlaySong}
           className="play"
@@ -69,6 +88,7 @@ export default function Player({
           className="skip-forward"
           icon={faAngleRight}
           size="2x"
+          onClick={() => handleSkip("skip-forward")}
         />
       </div>
       <audio

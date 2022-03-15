@@ -22,8 +22,11 @@ export default function App() {
       <Song currentSong={currentSong} />
       <Player
         currentSong={currentSong}
+        setCurrentSong={setCurrentSong}
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
+        audioRef={audioRef}
+        songs={songs}
       />
       <Library
         songs={songs}
