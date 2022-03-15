@@ -27,6 +27,7 @@ export default function App() {
         setIsPlaying={setIsPlaying}
         audioRef={audioRef}
         songs={songs}
+        setSongs={setSongs}
       />
       <Library
         songs={songs}
