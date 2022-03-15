@@ -15,6 +15,11 @@ export default function Player({ currentSong, isPlaying, setIsPlaying }) {
   const audioRef = useRef(null);
 
   // event handlers
+  const handleTimeUpdate = (e) => {
+    const current = e.target.currentTime;
+    const duration = e.target.duration;
+    setSongInfo({ ...songInfo, currentTime: current, duration });
+  };
   const handlePlaySong = () => {
     if (isPlaying) {
       audioRef.current.pause();
@@ -24,11 +29,7 @@ export default function Player({ currentSong, isPlaying, setIsPlaying }) {
       setIsPlaying(true);
     }
   };
-  const handleTimeUpdate = (e) => {
-    const current = e.target.currentTime;
-    const duration = e.target.duration;
-    setSongInfo({ ...songInfo, currentTime: current, duration });
-  };
+
   const trimTime = (time) => {
     return (
       Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
@@ -71,7 +72,7 @@ export default function Player({ currentSong, isPlaying, setIsPlaying }) {
         ref={audioRef}
         onTimeUpdate={(e) => handleTimeUpdate(e)}
         onLoadedMetadata={(e) => handleTimeUpdate(e)}
-      ></audio>
+      />
     </div>
   );
 }

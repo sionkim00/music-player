@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 // components
 import Player from "./components/Player";
 import Song from "./components/Song";
@@ -12,6 +12,7 @@ export default function App() {
   const [songs, setSongs] = useState(data());
   const [currentSong, setCurrentSong] = useState(songs[0]);
   const [isPlaying, setIsPlaying] = useState(false);
+
   return (
     <div className="App">
       <h1>Music Player</h1>

@@ -1,5 +1,5 @@
 export default function LibrarySong({ song, setCurrentSong }) {
-  const HandleSongSelect = () => {
+  const HandleSongSelect = async () => {
     setCurrentSong(song);
   };
   return (
