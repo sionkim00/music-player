@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-function chillHop() {
+export default function chillHop() {
   return [
     {
       name: "Everyday",
