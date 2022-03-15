@@ -7,19 +7,18 @@ import {
   faPause
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function Player({ currentSong, isPlaying, setIsPlaying }) {
+export default function Player({
+  currentSong,
+  isPlaying,
+  setIsPlaying,
+  audioRef
+}) {
   const [songInfo, setSongInfo] = useState({
     currentTime: 0,
     duration: 0
   });
-  const audioRef = useRef(null);
 
   // event handlers
-  const handleTimeUpdate = (e) => {
-    const current = e.target.currentTime;
-    const duration = e.target.duration;
-    setSongInfo({ ...songInfo, currentTime: current, duration });
-  };
   const handlePlaySong = () => {
     if (isPlaying) {
       audioRef.current.pause();
@@ -28,6 +27,11 @@ export default function Player({ currentSong, isPlaying, setIsPlaying }) {
       audioRef.current.play();
       setIsPlaying(true);
     }
+  };
+  const handleTimeUpdate = (e) => {
+    const current = e.target.currentTime;
+    const duration = e.target.duration;
+    setSongInfo({ ...songInfo, currentTime: current, duration });
   };
 
   const trimTime = (time) => {
